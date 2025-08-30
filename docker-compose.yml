@@ -24,7 +24,7 @@ services:
       FS_DB_USER: facturascripts
       FS_DB_PASS: facturascripts
     ports:
-      - "10044:80"   # entra por http://IP:10044
+      - "10067:80"   # entra por http://IP:10044
     volumes:
       - ./facturascripts:/var/www/html"
 
@@ -33,4 +33,4 @@ services:
     restart: always
     depends_on: [mysql]
     ports:
-      - "10052:8080" # entra por http://IP:10052
+      - "10058:8080" # entra por http://IP:10052
