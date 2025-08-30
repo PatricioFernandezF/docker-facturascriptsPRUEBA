@@ -1,24 +1,36 @@
-services:
+version: "3.8"
 
+services:
   mysql:
     image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: mypassword
+      MYSQL_DATABASE: facturascripts
+      MYSQL_USER: facturascripts
+      MYSQL_PASSWORD: facturascripts
     volumes:
       - ./mysql:/var/lib/mysql
 
   facturascripts:
     image: facturascripts/facturascripts:latest
     restart: always
+    depends_on: [mysql]
+    environment:
+      FS_DB_HOST: mysql
+      FS_DB_PORT: 3306
+      FS_DB_NAME: facturascripts
+      FS_DB_USER: facturascripts
+      FS_DB_PASS: facturascripts
     ports:
-      - 80:80
+      - "10044:80"   # entra por http://IP:10044
     volumes:
-      - ./facturascripts:/var/www/html
+      - ./facturascripts:/var/www/html"
 
   adminer:
     image: adminer
     restart: always
+    depends_on: [mysql]
     ports:
-      - 8080:8080
+      - "10052:8080" # entra por http://IP:10052
